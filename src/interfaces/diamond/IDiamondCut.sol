@@ -9,7 +9,7 @@ interface IDiamondCut {
     /// EVENTS ///
     //////////////
 
-    event DiamondCut(FacetCut[] diamondCut, address initializable, bytes data);
+    event DiamondCut(FacetCut[] diamondCut, address initializationContractAddress, bytes data);
 
     ///////////////
     /// ACTIONS ///
@@ -41,7 +41,7 @@ interface IDiamondCut {
 
     function diamondCut(
         FacetCut[] calldata _diamondCut,
-        address _inititializable,
+        address _initializationContractAddress,
         bytes calldata _data
     ) external;
 }
