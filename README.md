@@ -1,5 +1,7 @@
 # Clouds
 
+<p class="callout warning">Warning</p>
+
 ### Disclaimer
 
 All the smart contracts involved here **have not** gone through an auditing firm; therefore, we do not recommend them for use in production.
