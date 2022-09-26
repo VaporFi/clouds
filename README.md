@@ -1,6 +1,6 @@
 # Clouds
 
-> **Disclaimer**
+> **Disclaimer:**
 >
 > All the smart contracts involved here **have not** gone through an auditing firm; therefore, we do not recommend them for use in production.
 > This set of smart contracts **must** be treated as experimental software; they are provided on an "as is" and "as available" basis.
