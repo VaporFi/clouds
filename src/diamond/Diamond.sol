@@ -116,7 +116,7 @@ contract Diamond {
                 removeFunctions(
                     _diamondCut[facetIndex].facetAddress,
                     _diamondCut[facetIndex].functionSelectors
-                )
+                );
             } else {
                 revert Diamond__InvalidFacetAction();
             }
