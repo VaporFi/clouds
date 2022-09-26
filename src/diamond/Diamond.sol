@@ -7,6 +7,7 @@ error Diamond__InitializationFailed(
     address initializationContractAddress,
     bytes data
 );
+error Diamond__InvalidFacetAction();
 error Diamond__OnlyOwner();
 
 contract Diamond {
@@ -93,5 +94,32 @@ contract Diamond {
         IDiamondCut.FacetCut[] memory _diamondCut,
         address _initializationContractAddress,
         bytes memory _data
-    ) internal {}
+    ) internal {
+        for (
+            uint256 facetIndex;
+            facetIndex < _diamondCut.length;
+            ++facetIndex
+        ) {
+            IDiamondCut.FacetCutAction action = _diamondCut[facetIndex].action;
+
+            if (action == IDiamondCut.FacetCutAction.Add) {
+                addFunctions(
+                    _diamondCut[facetIndex].facetAddress,
+                    _diamondCut[facetIndex].functionSelectors
+                );
+            } else if (action == IDiamondCut.FacetCutAction.Replace) {
+                replaceFunctions(
+                    _diamondCut[facetIndex].facetAddress,
+                    _diamondCut[facetIndex].functionSelectors
+                );
+            } else if (action == IDiamondCut.FacetCutAction.Remove) {
+                removeFunctions(
+                    _diamondCut[facetIndex].facetAddress,
+                    _diamondCut[facetIndex].functionSelectors
+                )
+            } else {
+                revert Diamond__InvalidFacetAction();
+            }
+        }
+    }
 }
