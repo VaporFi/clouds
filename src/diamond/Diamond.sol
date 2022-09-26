@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import {IDiamondCut} from "../interfaces/diamond/IDiamondCut.sol";
 
+error Diamond__EmptyContract();
 error Diamond__FunctionAlreadyExists();
 error Diamond__ImmutableFunction();
 error Diamond__InexistentFunction();
@@ -94,11 +95,6 @@ contract Diamond {
         returns (address returnedContractOwner)
     {
         returnedContractOwner = diamondStorage().contractOwner;
-    }
-
-    function enforceIsContractOwner() internal view {
-        if (msg.sender != diamondStorage().contractOwner)
-            revert Diamond__OnlyOwner();
     }
 
     function diamondCut(
@@ -340,5 +336,55 @@ contract Diamond {
                 .facetFunctionSelectors[_facetAddress]
                 .facetAddressPosition;
         }
+    }
+
+    //////////////////////////////
+    /// INITIALIZE DIAMOND CUT ///
+    //////////////////////////////
+
+    function initializeDiamondCut(
+        address _initializationContractAddress,
+        bytes memory _data
+    ) internal {
+        if (_initializationContractAddress == address(0)) return;
+
+        enforceHasContractCode(_initializationContractAddress); /////////////////////////////
+
+        (bool success, bytes memory error) = _initializationContractAddress
+            .delegatecall(_data);
+
+        if (!success) {
+            if (error.length > 0) {
+                assembly {
+                    let dataSize := mload(error)
+
+                    revert(add(32, error), dataSize)
+                }
+            } else {
+                revert Diamond__InitializationFailed(
+                    _initializationContractAddress,
+                    _data
+                );
+            }
+        }
+    }
+
+    ///////////////
+    /// ENFORCE ///
+    ///////////////
+
+    function enforceHasContractCode(address _contract) internal view {
+        uint256 contractSize;
+
+        assembly {
+            contractSize := extcodesize(_contract)
+        }
+
+        if (contractSize < 0) revert Diamond__EmptyContract();
+    }
+
+    function enforceIsContractOwner() internal view {
+        if (msg.sender != diamondStorage().contractOwner)
+            revert Diamond__OnlyOwner();
     }
 }
