@@ -16,7 +16,7 @@ contract Diamond {
 
     event DiamondCut(
         IDiamondCut.FacetCut[] diamondCut,
-        address initializable,
+        address initializationContractAddress,
         bytes data
     );
 
@@ -91,7 +91,7 @@ contract Diamond {
 
     function diamondCut(
         IDiamondCut.FacetCut[] memory _diamondCut,
-        address _initializable,
+        address _initializationContractAddress,
         bytes memory _data
     ) internal {}
 }
