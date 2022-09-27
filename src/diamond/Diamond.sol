@@ -7,22 +7,23 @@ error Diamond__EmptyContract();
 error Diamond__FunctionAlreadyExists();
 error Diamond__ImmutableFunction();
 error Diamond__InexistentFunction();
+error Diamond__InvalidAddressZero();
+error Diamond__InvalidFacetAction();
+error Diamond__MustBeOwner();
+error Diamond__NoSelectorsInFacetCut();
+error Diamond__RemoveFacetAddressMustBeZero();
+error Diamond__SameFunctionAlreadyExists();
+
 error Diamond__InitializationFailed(
     address initializationContractAddress,
     bytes data
 );
-error Diamond__InvalidAddressZero();
-error Diamond__InvalidFacetAction();
-error Diamond__NoSelectorsInFacetCut();
-error Diamond__OnlyOwner();
-error Diamond__RemoveFacetAddressMustBeZero();
-error Diamond__SameFunctionAlreadyExists();
 
-/// @title A title that should describe the contract/interface
-/// @author The name of the author
-/// @notice Explain to an end user what this does
-/// @dev Explain to a developer any extra details
-contract Diamond {
+/// @title Diamond
+/// @author mektigboy
+/// @notice
+/// @dev
+library Diamond {
     //////////////
     /// EVENTS ///
     //////////////
@@ -74,12 +75,12 @@ contract Diamond {
     function diamondStorage()
         internal
         pure
-        returns (DiamondStorage storage returnedDiamondStorage)
+        returns (DiamondStorage storage ds)
     {
         bytes32 position = DIAMOND_STORAGE_POSITION;
 
         assembly {
-            returnedDiamondStorage.slot := position
+            ds.slot := position
         }
     }
 
@@ -97,12 +98,8 @@ contract Diamond {
         emit OwnershipTransferred(oldOwner, _newOwner);
     }
 
-    function contractOwner()
-        internal
-        view
-        returns (address returnedContractOwner)
-    {
-        returnedContractOwner = diamondStorage().contractOwner;
+    function contractOwner() internal view returns (address co) {
+        co = diamondStorage().contractOwner;
     }
 
     function diamondCut(
@@ -260,7 +257,7 @@ contract Diamond {
     function addFacet(DiamondStorage storage ds, address _facetAddress)
         internal
     {
-        enforceHasContractCode(_facetAddress); ///////////////////////////////////////////
+        enforceHasContractCode(_facetAddress);
 
         ds.facetFunctionSelectors[_facetAddress].facetAddressPosition = ds
             .facetAddresses
@@ -356,7 +353,7 @@ contract Diamond {
     ) internal {
         if (_initializationContractAddress == address(0)) return;
 
-        enforceHasContractCode(_initializationContractAddress); /////////////////////////////
+        enforceHasContractCode(_initializationContractAddress);
 
         (bool success, bytes memory error) = _initializationContractAddress
             .delegatecall(_data);
@@ -393,6 +390,6 @@ contract Diamond {
 
     function enforceIsContractOwner() internal view {
         if (msg.sender != diamondStorage().contractOwner)
-            revert Diamond__OnlyOwner();
+            revert Diamond__MustBeOwner();
     }
 }
