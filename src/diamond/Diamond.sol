@@ -23,7 +23,7 @@ error Diamond__InitializationFailed(
 /// @author mektigboy
 /// @notice
 /// @dev
-library Diamond {
+abstract contract Diamond {
     //////////////
     /// EVENTS ///
     //////////////
