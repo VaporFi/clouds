@@ -276,12 +276,12 @@ library LDiamond {
     function addFunction(
         DiamondStorage storage ds,
         bytes4 _selector,
-        uint96 _selectorPosition,
+        uint96 _positon,
         address _facet
     ) internal {
         ds
             .selectorToFacetAndPosition[_selector]
-            .functionSelectorPosition = _selectorPosition;
+            .functionSelectorPosition = _positon;
         ds.facetFunctionSelectors[_facet].functionSelectors.push(_selector);
         ds.selectorToFacetAndPosition[_selector].facetAddress = _facet;
     }
