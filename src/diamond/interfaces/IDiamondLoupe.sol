@@ -19,19 +19,25 @@ interface IDiamondLoupe {
     /// LOGIC ///
     /////////////
 
+    /// @notice ...
     function facets() external view returns (Facet[] memory facets_);
 
+    /// @notice ...
+    /// @param _facet Facet address
     function facetFunctionSelectors(address _facet)
         external
         view
         returns (bytes4[] memory facetFunctionSelectors_);
 
+    /// @notice ...
     function facetAddresses()
         external
         view
         returns (address[] memory facetAddresses_);
 
-    function facetAddress(bytes4 _functionSelector)
+    /// @notice ...
+    /// @param _selector Function selector
+    function facetAddress(bytes4 _selector)
         external
         view
         returns (address facetAddress_);
