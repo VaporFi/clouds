@@ -22,7 +22,6 @@ interface IDiamondCut {
     /// Replace - 1
     /// Remove  - 2
 
-    /// @notice Facet actions
     enum FacetCutAction {
         Add,
         Replace,
