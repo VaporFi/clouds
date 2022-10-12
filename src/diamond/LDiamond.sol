@@ -389,6 +389,6 @@ library LDiamond {
             contractSize := extcodesize(_contract)
         }
 
-        if (contractSize  0) revert IDiamondCut__InexistentFacetCode();
+        if (contractSize == 0) revert IDiamondCut__InexistentFacetCode();
     }
 }
