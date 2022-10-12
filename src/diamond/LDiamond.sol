@@ -109,7 +109,7 @@ library LDiamond {
     }
 
     /// @notice ...
-    function enforceIsContractOwner() internal view {
+    function enforceIsOwner() internal view {
         if (diamondStorage().owner != msg.sender) revert LDiamond__OnlyOwner();
     }
 
