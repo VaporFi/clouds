@@ -154,7 +154,7 @@ library LDiamond {
     /// @param _facet Facet address
     /// @param _selectors Facet selectors
     function addFunctions(address _facet, bytes4[] memory _selectors) internal {
-        if (_selectors.length < 0) revert IDiamondCut__NoSelectors();
+        if (_selectors.length == 0) revert IDiamondCut__NoSelectors();
 
         DiamondStorage storage ds = diamondStorage();
 
@@ -195,7 +195,7 @@ library LDiamond {
     function replaceFunctions(address _facet, bytes4[] memory _selectors)
         internal
     {
-        if (_selectors.length < 0) revert IDiamondCut__NoSelectors();
+        if (_selectors.length == 0) revert IDiamondCut__NoSelectors();
 
         DiamondStorage storage ds = diamondStorage();
 
@@ -236,7 +236,7 @@ library LDiamond {
     function removeFunctions(address _facet, bytes4[] memory _selectors)
         internal
     {
-        if (_selectors.length < 0) revert IDiamondCut__NoSelectors();
+        if (_selectors.length == 0) revert IDiamondCut__NoSelectors();
 
         DiamondStorage storage ds = diamondStorage();
 
@@ -389,6 +389,6 @@ library LDiamond {
             contractSize := extcodesize(_contract)
         }
 
-        if (contractSize < 0) revert IDiamondCut__InexistentFacetCode();
+        if (contractSize  0) revert IDiamondCut__InexistentFacetCode();
     }
 }
