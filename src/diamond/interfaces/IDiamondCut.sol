@@ -10,7 +10,7 @@ interface IDiamondCut {
     /// EVENTS ///
     //////////////
 
-    event DiamondCut(FacetCut[] _cut, address _init, bytes _calldata);
+    event DiamondCut(FacetCut[] _cut, address _init, bytes _data);
 
     ///////////////
     /// STORAGE ///
@@ -35,11 +35,11 @@ interface IDiamondCut {
     }
 
     /// @param _cut Facet addreses and function selectors
-    /// @param _init Address of contract or facet to execute _calldata
-    /// @param _calldata Function call, includes function selector and arguments
+    /// @param _init Address of contract or facet to execute _data
+    /// @param _data Function call, includes function selector and arguments
     function diamondCut(
         FacetCut[] calldata _cut,
         address _init,
-        bytes calldata _calldata
+        bytes calldata _data
     ) external;
 }
