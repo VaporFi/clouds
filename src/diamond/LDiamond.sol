@@ -15,7 +15,7 @@ error IDiamondCut__NoSelectors();
 
 error LDiamond__InitializationFailed(
     address _initializationContractAddress,
-    bytes _calldata
+    bytes _data
 );
 error LDiamond__OnlyOwner();
 
@@ -32,7 +32,7 @@ library LDiamond {
     event DiamondCut(
         IDiamondCut.FacetCut[] _cut,
         address _init,
-        bytes _calldata
+        bytes _data
     );
 
     event OwnershipTransferred(
@@ -116,11 +116,11 @@ library LDiamond {
     /// @notice ...
     /// @param _cut ...
     /// @param _init ...
-    /// @param _calldata ...
+    /// @param _data ...
     function diamondCut(
         IDiamondCut.FacetCut[] memory _cut,
         address _init,
-        bytes memory _calldata
+        bytes memory _data
     ) internal {
         for (uint256 facetIndex; facetIndex < _cut.length; ++facetIndex) {
             IDiamondCut.FacetCutAction action = _cut[facetIndex].action;
@@ -145,9 +145,9 @@ library LDiamond {
             }
         }
 
-        emit DiamondCut(_cut, _init, _calldata);
+        emit DiamondCut(_cut, _init, _data);
 
-        initializeDiamondCut(_init, _calldata);
+        initializeDiamondCut(_init, _data);
     }
 
     /// @notice ...
@@ -354,8 +354,8 @@ library LDiamond {
 
     /// @notice ...
     /// @param _init ...
-    /// @param _calldata ...
-    function initializeDiamondCut(address _init, bytes memory _calldata)
+    /// @param _data ...
+    function initializeDiamondCut(address _init, bytes memory _data)
         internal
     {
         if (_init == address(0)) {
@@ -364,7 +364,7 @@ library LDiamond {
 
         enforceHasContractCode(_init);
 
-        (bool success, bytes memory error) = _init.delegatecall(_calldata);
+        (bool success, bytes memory error) = _init.delegatecall(_data);
 
         if (!success) {
             if (error.length > 0) {
@@ -375,7 +375,7 @@ library LDiamond {
                     revert(add(32, error), dataSize)
                 }
             } else {
-                revert LDiamond__InitializationFailed(_init, _calldata);
+                revert LDiamond__InitializationFailed(_init, _data);
             }
         }
     }
