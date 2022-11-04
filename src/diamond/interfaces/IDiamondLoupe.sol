@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.0;
 
 /// @title IDiamondLoupe
 /// @author mektigboy
@@ -19,26 +19,20 @@ interface IDiamondLoupe {
     /// LOGIC ///
     /////////////
 
-    /// @notice ...
-    function facets() external view returns (Facet[] memory facets_);
-
-    /// @notice ...
-    /// @param _facet Facet address
-    function facetFunctionSelectors(address _facet)
+    function facetAddress(bytes4 selector)
         external
         view
-        returns (bytes4[] memory facetFunctionSelectors_);
+        returns (address facetAddress);
 
-    /// @notice ...
     function facetAddresses()
         external
         view
-        returns (address[] memory facetAddresses_);
+        returns (address[] memory facetAddresses);
 
-    /// @notice ...
-    /// @param _selector Function selector
-    function facetAddress(bytes4 _selector)
+    function facetFunctionSelectors(address facet)
         external
         view
-        returns (address facetAddress_);
+        returns (bytes4[] memory facetFunctionSelectors);
+
+    function facets() external view returns (Facet[] memory facets);
 }
