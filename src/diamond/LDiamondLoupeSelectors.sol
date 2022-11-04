@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.0;
 
 /// @title LDiamondLoupeSelectors
 /// @author mektigboy
@@ -18,7 +18,7 @@ library LDiamondLoupeSelectors {
     /// LOGIC ///
     /////////////
 
-    /// @notice ...
+    /// @notice Get the function selectors
     function selectors() internal pure returns (bytes4[] memory selectors_) {
         uint256 numberOfSelectors = encodedSelectors.length / 4;
 
