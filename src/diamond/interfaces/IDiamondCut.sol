@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.0;
 
 /// @title IDiamondCut
 /// @author mektigboy
@@ -10,7 +10,7 @@ interface IDiamondCut {
     /// EVENTS ///
     //////////////
 
-    event DiamondCut(FacetCut[] _cut, address _init, bytes _data);
+    event DiamondCut(FacetCut[] cut, address init, bytes data);
 
     ///////////////
     /// STORAGE ///
@@ -34,12 +34,13 @@ interface IDiamondCut {
         bytes4[] functionSelectors;
     }
 
-    /// @param _cut Facet addreses and function selectors
-    /// @param _init Address of contract or facet to execute _data
-    /// @param _data Function call, includes function selector and arguments
+    /////////////
+    /// LOGIC ///
+    /////////////
+
     function diamondCut(
-        FacetCut[] calldata _cut,
-        address _init,
-        bytes calldata _data
+        FacetCut[] calldata cut,
+        address init,
+        bytes calldata data
     ) external;
 }
