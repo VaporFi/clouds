@@ -24,7 +24,12 @@ library LDiamondLoupeSelectors {
 
         selectors_ = new bytes4[](numberOfSelectors);
 
-        for (uint256 i = 0; i < numberOfSelectors; ++i) {
+        for (uint256 i = 0; i < numberOfSelectors; ) {
+            /// @notice Realistically impossible to overflow/underflow
+            unchecked {
+                ++i;
+            }
+
             uint256 start = i * 4;
 
             selectors_[i] =
