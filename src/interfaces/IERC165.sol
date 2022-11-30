@@ -8,5 +8,5 @@ interface IERC165 {
     /// LOGIC ///
     /////////////
 
-    function supportsInterface(bytes4 id) external view returns (bool);
+    function supportsInterface(bytes4 interfaceId) external view returns (bool);
 }
