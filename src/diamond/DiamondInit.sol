@@ -17,6 +17,7 @@ contract DiamondInit {
     /// LOGIC ///
     /////////////
 
+    /// @notice Initialize diamond
     function init() external virtual {
         /// @notice Add ERC165 data
         LDiamond.DiamondStorage storage ds = LDiamond.diamondStorage();
