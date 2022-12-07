@@ -14,9 +14,9 @@ abstract contract Ownable {
 
     event OwnershipTransferred(address indexed user, address indexed newOwner);
 
-    ///////////////
-    /// STORAGE ///
-    ///////////////
+    /////////////////////////
+    /// OWNERSHIP STORAGE ///
+    /////////////////////////
 
     address public owner;
 
