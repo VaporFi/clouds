@@ -1,15 +1,12 @@
-name: test
+name: CI
 
-on: workflow_dispatch
+on: push
 
 env:
   FOUNDRY_PROFILE: ci
 
 jobs:
   check:
-    strategy:
-      fail-fast: true
-
     name: Foundry project
     runs-on: ubuntu-latest
     steps:
@@ -22,13 +19,13 @@ jobs:
         with:
           version: nightly
 
-      - name: Run Forge build
+      - name: Build
         run: |
           forge --version
           forge build --sizes
         id: build
 
-      - name: Run Forge tests
+      - name: Test
         run: |
           forge test -vvv
         id: test

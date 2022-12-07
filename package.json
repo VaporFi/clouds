@@ -1,0 +1,12 @@
+{
+  "name": "@vaporfi/clouds",
+  "version": "1.0.0",
+  "description": "EIP-2535 utilities",
+  "main": "index.js",
+  "repository": "git@github.com:VaporFi/clouds.git",
+  "author": "mektigboy <mektigboy@protonmail.com>",
+  "license": "MIT",
+  "files": [
+    "src"
+  ]
+}
