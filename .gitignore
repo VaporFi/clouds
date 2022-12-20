@@ -11,3 +11,5 @@ out/
 .env
 
 ToDo.txt
+
+node_modules

@@ -1,0 +1,17 @@
+{
+  "name": "@vaporfi/clouds",
+  "version": "1.0.0",
+  "description": "EIP-2535 utilities",
+  "keywords": [
+    "solidity",
+    "eip-2535",
+    "ethereum"
+  ],
+  "repository": "git@github.com:VaporFi/clouds.git",
+  "license": "MIT",
+  "author": "mektigboy <mektigboy@protonmail.com>",
+  "main": "index.js",
+  "files": [
+    "src"
+  ]
+}
