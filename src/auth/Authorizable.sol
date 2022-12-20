@@ -23,21 +23,28 @@ abstract contract Authorizable {
 
     event OwnershipTransferred(address indexed user, address indexed newOwner);
 
-    /////////////////////////
-    /// OWNERSHIP STORAGE ///
-    /////////////////////////
+    ///////////////
+    /// STORAGE ///
+    ///////////////
 
     address public owner;
 
-    /////////////////////////
-    /// AUTHORITY STORAGE ///
-    /////////////////////////
-
     IAuthority public authority;
 
-    /////////////
-    /// LOGIC ///
-    /////////////
+    /////////////////
+    /// MODIFIERS ///
+    /////////////////
+
+    modifier onlyAuthorized() virtual {
+        if (!isAuthorized(msg.sender, msg.sig))
+            revert Authorizable__OnlyAuthorized();
+
+        _;
+    }
+
+    ///////////////////
+    /// CONSTRUCTOR ///
+    ///////////////////
 
     constructor(address _owner, IAuthority _authority) {
         owner = _owner;
@@ -47,11 +54,9 @@ abstract contract Authorizable {
         emit AuthorityUpdated(msg.sender, _authority);
     }
 
-    modifier onlyAuthorized() virtual {
-        if (!isAuthorized(msg.sender, msg.sig))
-            revert Authorizable__OnlyAuthorized();
-        _;
-    }
+    ///////////////////////////
+    /// AUTHORIZATION LOGIC ///
+    ///////////////////////////
 
     function isAuthorized(
         address user,
