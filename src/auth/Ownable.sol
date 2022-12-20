@@ -14,9 +14,9 @@ abstract contract Ownable {
 
     event OwnershipTransferred(address indexed user, address indexed newOwner);
 
-    /////////////////////////
-    /// OWNERSHIP STORAGE ///
-    /////////////////////////
+    ///////////////
+    /// STORAGE ///
+    ///////////////
 
     address public owner;
 
@@ -26,18 +26,23 @@ abstract contract Ownable {
 
     modifier onlyOwner() virtual {
         if (msg.sender != owner) revert Ownable__OnlyOwner();
+
         _;
     }
 
-    /////////////
-    /// LOGIC ///
-    /////////////
+    ///////////////////
+    /// CONSTRUCTOR ///
+    ///////////////////
 
     constructor(address _owner) {
         owner = _owner;
 
         emit OwnershipTransferred(address(0), _owner);
     }
+
+    /////////////
+    /// LOGIC ///
+    /////////////
 
     function transferOwnership(address newOwner) public virtual onlyOwner {
         owner = newOwner;
