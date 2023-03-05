@@ -116,11 +116,6 @@ library LDiamond {
         bytes memory _data
     ) internal {
         for (uint256 facetIndex; facetIndex < _cut.length; ) {
-            /// @notice Realistically impossible to overflow/underflow
-            unchecked {
-                ++facetIndex;
-            }
-
             IDiamondCut.FacetCutAction action = _cut[facetIndex].action;
 
             if (action == IDiamondCut.FacetCutAction.Add) {
@@ -140,6 +135,10 @@ library LDiamond {
                 );
             } else {
                 revert LDiamond__IncorrectAction();
+            }
+            /// @notice Realistically impossible to overflow/underflow
+            unchecked {
+                ++facetIndex;
             }
         }
 
@@ -167,11 +166,6 @@ library LDiamond {
         if (selectorPosition == 0) addFacet(ds, _facet);
 
         for (uint256 selectorIndex; selectorIndex < _selectors.length; ) {
-            /// @notice Realistically impossible to overflow/underflow
-            unchecked {
-                ++selectorIndex;
-            }
-
             bytes4 selector = _selectors[selectorIndex];
 
             address oldFacetAddress = ds
@@ -185,6 +179,7 @@ library LDiamond {
 
             /// @notice Realistically impossible to overflow/underflow
             unchecked {
+                ++selectorIndex;
                 ++selectorPosition;
             }
         }
@@ -211,11 +206,6 @@ library LDiamond {
         if (selectorPosition == 0) addFacet(ds, _facet);
 
         for (uint256 selectorIndex; selectorIndex < _selectors.length; ) {
-            /// @notice Realistically impossible to overflow/underflow
-            unchecked {
-                ++selectorIndex;
-            }
-
             bytes4 selector = _selectors[selectorIndex];
 
             address oldFacetAddress = ds
@@ -231,6 +221,7 @@ library LDiamond {
 
             /// @notice Realistically impossible to overflow/underflow
             unchecked {
+                ++selectorIndex;
                 ++selectorPosition;
             }
         }
@@ -249,11 +240,6 @@ library LDiamond {
         if (_facet != address(0)) revert LDiamond__AddressMustBeZero();
 
         for (uint256 selectorIndex; selectorIndex < _selectors.length; ) {
-            /// @notice Realistically impossible to overflow/underflow
-            unchecked {
-                ++selectorIndex;
-            }
-
             bytes4 selector = _selectors[selectorIndex];
 
             address oldFacetAddress = ds
@@ -261,6 +247,12 @@ library LDiamond {
                 .facetAddress;
 
             removeFunction(ds, oldFacetAddress, selector);
+
+            /// @notice Realistically impossible to overflow/underflow
+            unchecked {
+                ++selectorIndex;
+            }
+
         }
     }
 
